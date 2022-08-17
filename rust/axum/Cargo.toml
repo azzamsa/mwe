@@ -1,0 +1,9 @@
+[package]
+name = "axum_mwe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.5.15"
+serde = { version = "1.0.143", features = ["derive"] }
+tokio = { version = "1.20.1", features = ["full"] }
