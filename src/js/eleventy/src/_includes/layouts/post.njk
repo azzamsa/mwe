@@ -1,0 +1,104 @@
+---
+layout: default
+---
+
+<main id="content" class="content font-serif" tabindex="-1">
+
+  <div id="post" class="post h-entry container mx-auto max-w-4xl px-2" aria-label="Notes">
+    <div class="post-grid grid grid-cols-9">
+      <header class="post-header flex flex-col text-center">
+        <h1 class="post-title font-extrabold text-3xl my-2 md:text-4xl lg:text-5xl">{{ title }}</h1>
+
+        {% if not "page" in tags %}
+          <p class="post-meta text-sm font-normal my-1">
+            {{ date | dateDisplay }}
+            {% if modified %}
+              <span class="text-text-secondary">, rev.</span> {{ modified | dateDisplay }}
+            {% endif %}
+            {% set reading_time = content | getReadingTime(reading_time_details_tag) %}
+            - {{  reading_time  }}  {{ reading_time | pluralize("minute", "minutes") }} read
+          </p>
+        {% endif %}
+
+        {% if tags %}
+          <ul class="post-tag p-category grid pt-4 justify-center">
+            {% set comma = joiner() %}
+            {% for item in tags %}
+              {%- if item != "essay" and item != "note" and item != "page"
+                and item != "essay_id" and item != "note_id" -%}
+                <li class="mr-2 my-1">
+                  <a class="link text-white hover:text-white inline-block
+                    px-2 py-1 bg-theme-primary hover:bg-theme-primary-glare text-sm rounded"
+                    href="/category/{{ item }}">#{{ item }}</a>
+                </li>
+              {%- endif -%}
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </header>
+
+      <div class="post-featured">
+        {% if featured_image %}
+          <figure class="my-4">
+            <img class="rounded" data-lazy="{{ featured_image }}" alt="{{ image_caption }}">
+
+            {% if image_caption %}
+              <figcaption class="text-center text-sm italic mt-4">{{ image_caption }}</figcaption>
+            {% endif %}
+
+          </figure>
+        {% endif %}
+      </div>
+
+      <div class="post-excerpt">
+        {% if excerpt %}
+          <p class="my-4 text-text-secondary md:text-lg">{{ excerpt }}</p>
+        {% endif %}
+      </div>
+
+      {% if toc %}
+        <div class="post-toc">
+          <details>
+            <summary class="my-4">Table of contents</summary>
+            <div class="text-theme-primary ml-4">
+              {{ content | toc | safe }}
+            </div>
+          </details>
+        </div>
+      {% endif %}
+
+      <div class="post-content text-base mb-8">
+        {{ content | safe }}
+      </div>
+
+      <div class="post-related mb-8 font-sans">
+        {% set relatedPosts = collections.all | getRelatedPosts(tags, title) %}
+        {%- if relatedPosts | length != 0  -%}
+          <hr>
+          <h3 class="text-2xl font-bold ml-0 mt-6">Related posts</h3>
+          <ul class="mt-2">
+            {% for post in relatedPosts %}
+              <li>
+                <a class="block mt-4 md:flex md:items-center md:mt-1" href="{{ post.url }}">
+                  <span class="block link text-lg text-theme-primary font-serif font-medium hover:underline md:text-xl">{{ post.data.title }}</span>
+                  <time class="block text-base text-text-primary md:order-first md:flex md:flex-0-1" datetime="{{ post.date }}">
+                    {{ post.date | dateDisplay }}
+                  </time>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {% if comments %}
+        <div class="post-webmentions font-sans">
+          <hr>
+          <h3 class="text-2xl font-bold ml-0 mt-6">Webmentions</h3>
+          {% set webmentionUrl %}{{ page.url | url | absoluteUrl(site.url) }}{% endset %}
+          {% include "partials/webmentions.njk" %}
+        </div>
+      {% endif %}
+
+    </div>
+</main>

@@ -1,0 +1,27 @@
+{
+    "name": "mwe",
+    "version": "0.1.0",
+    "description": "mwe",
+    "author": "Azzam S.A",
+    "license": "MIT",
+    "packageManager": "pnpm@7.9.0",
+    "scripts": {
+        "dev:styles": "parcel watch 'src/styles/index.css' --dist-dir 'dist/styles' --public-url './'",
+        "dev:app": "eleventy --serve",
+        "dev": "run-p dev:styles dev:app",
+        "build:styles": "parcel build 'src/styles/index.css' --dist-dir 'dist/styles' --public-url './'",
+        "build:app": "eleventy",
+        "build": "NODE_ENV=production run-p build:styles build:app"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/azzamsa/mwe/"
+    },
+    "devDependencies": {
+        "@11ty/eleventy": "^1.0.2",
+        "npm-run-all": "^4.1.5",
+        "parcel": "^2.7.0",
+        "postcss": "^8.4.16",
+        "tailwindcss": "^3.1.8"
+    }
+}

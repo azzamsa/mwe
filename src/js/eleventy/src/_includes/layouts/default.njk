@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" class="min-h-full antialiased">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if meta_title %}{{ meta_title }}{% else %}{{ title }}{% endif %} - {{ site.name }}</title>
+    <meta name="description" content="{% if meta_description %}{{ meta_description }}{% else %}{{ excerpt }}{% endif %}">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  </head>
+
+  <body {% if body_class %} id="{{ body_class }}"{% endif %}
+    class="text-text-primary bg-theme-bg leading-snug md:leading-normal lg:leading-relaxed">
+
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <div id="layout" class="grid gap-4 box-border">
+      {{ content | safe }}
+    </div>
+
+  </body>
+</html>
