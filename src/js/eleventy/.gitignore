@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.parcel-cache/
+mix-manifest.json
+.env
+_cache/
+.pnpm-debug.log
+
+# Local Netlify folder
+.netlify
+
+# Nextloud
+._sync_*

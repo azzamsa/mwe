@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" class="min-h-full antialiased">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ excerpt }}">
+    <link rel="stylesheet" href="/styles/index.css">
+  </head>
+
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <div id="layout" class="">
+      {{ content | safe }}
+    </div>
+
+  </body>
+</html>
