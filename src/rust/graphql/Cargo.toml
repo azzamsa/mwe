@@ -5,9 +5,9 @@ authors = ["azzamsa <vcs@azzamsa.com>"]
 edition = "2021"
 
 [dependencies]
-axum = "0.5.13"
-tokio = { version = "1.20.0", features = ["macros", "rt-multi-thread"] }
+axum = "0.5.15"
+tokio = { version = "1.20.1", features = ["macros", "rt-multi-thread"] }
 
 # GraphQL
-async-graphql = { version = "4.0.5", features = ["uuid", "chrono"] }
-async-graphql-axum = "4.0.5"
+async-graphql = { version = "4.0.10", features = ["uuid", "chrono"] }
+async-graphql-axum = "4.0.10"
