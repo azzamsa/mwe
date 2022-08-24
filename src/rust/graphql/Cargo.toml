@@ -9,5 +9,5 @@ axum = "0.5.13"
 tokio = { version = "1.20.0", features = ["macros", "rt-multi-thread"] }
 
 # GraphQL
-async-graphql = { version = "4.0.5", features = ["uuid", "chrono"] }
+async-graphql = { version = "4.0.6", features = ["uuid", "chrono"] }
 async-graphql-axum = "4.0.5"
