@@ -1,0 +1,9 @@
+[package]
+name = "mwe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+kube = { version = "0.76.0", features = ["runtime", "derive"] }
+k8s-openapi = { version = "0.16.0", features = ["v1_25"] }
+tokio = { version = "1.22.0", features = ["full"] }
