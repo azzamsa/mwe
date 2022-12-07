@@ -1,0 +1,12 @@
+[package]
+name = "mwe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+aws-config = "0.51.0"
+aws-sdk-s3 = "0.21.0"
+aws-types = "0.51.0"
+http = "0.2.8"
