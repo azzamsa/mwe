@@ -10,9 +10,9 @@ use axum::{
     routing::get,
     Json, Router,
 };
-use gql::{StudentQuery, StudentSchema};
+use gql::{AppQuery, AppSchema};
 
-async fn graphql_handler(schema: Extension<StudentSchema>, req: Json<Request>) -> Json<Response> {
+async fn graphql_handler(schema: Extension<AppSchema>, req: Json<Request>) -> Json<Response> {
     schema.execute(req.0).await.into()
 }
 
@@ -22,7 +22,7 @@ async fn graphql_playground() -> impl IntoResponse {
 
 #[tokio::main]
 async fn main() {
-    let schema = Schema::build(StudentQuery, EmptyMutation, EmptySubscription).finish();
+    let schema = Schema::build(AppQuery, EmptyMutation, EmptySubscription).finish();
 
     let app = Router::new()
         .route("/", get(graphql_playground).post(graphql_handler))

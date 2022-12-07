@@ -1,26 +1,39 @@
 use async_graphql::{
-    ComplexObject, Context, EmptyMutation, EmptySubscription, Object, Schema, SimpleObject,
+    Context, CustomValidator, EmptyMutation, EmptySubscription, InputObject, Object, Schema,
 };
 
-pub type StudentSchema = Schema<StudentQuery, EmptyMutation, EmptySubscription>;
+pub type AppSchema = Schema<AppQuery, EmptyMutation, EmptySubscription>;
 
 //
 // Model
 //
 
-#[derive(SimpleObject)]
-#[graphql(complex)]
-pub struct Student {
-    #[graphql(visible = false)]
-    pub repeat: u8,
-    pub name: String,
+struct PasswordValidator;
+
+impl CustomValidator<String> for PasswordValidator {
+    /// Check if `value` only contains allowed chars
+    fn check(&self, value: &String) -> Result<(), String> {
+        let allowed_chars = ['1', '2', '3', '4', '5'];
+
+        if value
+            .chars()
+            .all(|c| allowed_chars.contains(&c.to_ascii_lowercase()))
+        {
+            Ok(())
+        } else {
+            Err(format!("illegal char in password: `{}`", value))
+        }
+    }
 }
 
-#[ComplexObject]
-impl Student {
-    async fn repeat_name(&self) -> String {
-        format!("{} ", self.name).repeat(self.repeat.into())
-    }
+#[derive(InputObject)]
+pub struct ChangePasswordInput {
+    #[graphql(validator(min_length = 3, max_length = 63))]
+    pub namespace: String,
+    //
+    #[graphql(validator(min_length = 6, max_length = 16))]
+    #[graphql(validator(custom = "PasswordValidator"))]
+    pub new_password: String,
 }
 
 //
@@ -28,14 +41,11 @@ impl Student {
 //
 
 #[derive(Default)]
-pub struct StudentQuery;
+pub struct AppQuery;
 
 #[Object]
-impl StudentQuery {
-    pub async fn student(&self, _ctx: &Context<'_>, repeat: u8) -> Student {
-        Student {
-            repeat,
-            name: "Ferris".to_string(),
-        }
+impl AppQuery {
+    pub async fn change_password(&self, _ctx: &Context<'_>, _input: ChangePasswordInput) -> String {
+        "password changed".to_string()
     }
 }
