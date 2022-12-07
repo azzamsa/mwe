@@ -13,7 +13,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         cluster: None,
         user: None,
     };
-    let config = kube::Config::from_custom_kubeconfig(kube_config, &kube_config_options).await.unwrap();
+    let config = kube::Config::from_custom_kubeconfig(kube_config, &kube_config_options)
+        .await
+        .unwrap();
     let client = Client::try_from(config).unwrap();
 
     let pods: Api<Pod> = Api::namespaced(client, "hyosho");
@@ -23,3 +25,4 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
+}
