@@ -1,22 +1,20 @@
+/// https://github.com/awslabs/aws-sdk-rust/blob/main/sdk/s3/tests/reconnects.rs
+
 use aws_sdk_s3::Client;
 use aws_types::region::Region;
-use http::Uri;
+use aws_sdk_s3::config::Credentials;
 
 #[tokio::main]
 async fn main() -> Result<(), aws_sdk_s3::Error> {
     let secret_key = "secret";
     let access_key = "access";
-    let url = "https://storage.company.net";
 
-    let cred = aws_sdk_s3::Credentials::new(access_key, secret_key, None, None, "custom");
-    let url: Uri = url.parse().unwrap();
-    let endpoint = aws_sdk_s3::Endpoint::immutable(url);
+    let cred = Credentials::new(access_key, secret_key, None, None, "custom");
     // Region is not used, but required by the SDK's API
-    let region = Region::new("us-west-2");
     let config = aws_sdk_s3::config::Builder::new()
-        .endpoint_resolver(endpoint)
-        .region(region)
+        .region(Region::new("us-west-2"))
         .credentials_provider(cred)
+        .endpoint_url("https://storage.company.com")
         .build();
     let client = Client::from_conf(config);
 
